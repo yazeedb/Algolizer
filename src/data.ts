@@ -14,7 +14,12 @@ interface Implementation {
   // TODO: Where does sampleInput belong—on the implementation or animation?
 }
 
-type Category = 'array' | 'string' | 'linkedList';
+type Category =
+  | 'array'
+  | 'string'
+  | 'linkedList'
+  | 'binaryTree'
+  | 'binarySearchTree';
 
 // TODO: What type should this eventually be?
 type Animation = any;
