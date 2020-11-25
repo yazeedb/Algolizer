@@ -1,6 +1,6 @@
 import gsap from 'gsap';
 import React, { FC, useEffect, useState } from 'react';
-import { FinalAnswer } from '../../App';
+import { FinalAnswer } from '../../state';
 import './TwoPointers.scss';
 
 interface TwoPointersProps {
