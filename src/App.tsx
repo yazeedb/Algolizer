@@ -1,33 +1,49 @@
-import React, { useEffect, useReducer } from 'react';
+import React, { useEffect } from 'react';
 import gsap from 'gsap';
 import './App.css';
-import { TwoPointers } from './arrays/findTheDuplicate/TwoPointers';
-import { reducer, initialState, input, sorted } from './state';
+import {
+  findDuplicate,
+  TwoPointers
+} from './arrays/findTheDuplicate/TwoPointers';
+import { input, sorted } from './state';
 
-const tl = gsap.timeline({ defaults: { xPercent: -100 } });
+const tl = gsap.timeline();
 
 const App = () => {
-  const [state, dispatch] = useReducer(reducer, initialState);
+  const answer = findDuplicate(sorted);
+  const answerIndex = sorted.findIndex((v) => v === answer);
 
   useEffect(() => {
-    tl.from('.first', {})
-      .from('.second', {}, '+=1')
-      .from('.element-second', { opacity: 0, stagger: { amount: 3 } }, '+=1')
-      .from('.third', {
-        xPercent: -100,
-        onStart: () => dispatch({ type: 'PLAY_TWO_POINTERS' })
+    const arrayElements = Array.from(document.querySelectorAll('.element'));
+
+    tl.from('.first', { xPercent: -100 })
+      .from('.second', { xPercent: -100 }, '+=1')
+      .from('.element-second', { opacity: 0, stagger: { amount: 1.5 } }, '+=1')
+      .from('.third', { xPercent: -100 })
+      .to('.pointers', {
+        keyframes: arrayElements.slice(0, answerIndex).map((e) => {
+          const { width } = e.getBoundingClientRect();
+
+          return {
+            x: `+=${width}`,
+            duration: 0.1,
+            delay: 0.5
+          };
+        })
       })
-      .addPause()
-      .from('.four', {});
+      .from('.four', { xPercent: -100 })
+      .fromTo(
+        '.pointer.one',
+        { y: '+=10', repeat: -1, yoyo: true, repeatDelay: 0 },
+        { y: '-=20', repeat: -1, yoyo: true, repeatDelay: 0 }
+      )
+      .fromTo(
+        '.pointer.two',
+        { y: '-=10', repeat: -1, yoyo: true, repeatDelay: 0 },
+        { y: '+=20', repeat: -1, yoyo: true, repeatDelay: 0 },
+        '<'
+      );
   }, []);
-
-  useEffect(() => {
-    if (state.scene !== 'fourth') {
-      return;
-    }
-
-    tl.play();
-  }, [state.scene]);
 
   return (
     <main>
@@ -47,19 +63,13 @@ const App = () => {
       </div>
 
       <div className="third scene">
-        <TwoPointers
-          sortedArray={sorted}
-          start={state.scene === 'third'}
-          onComplete={(finalAnswer) =>
-            dispatch({ type: 'SCENE_END', finalAnswer })
-          }
-        />
+        <TwoPointers sortedArray={sorted} />
       </div>
 
       <div className="four scene">
         <p>
-          {state.finalAnswer !== null
-            ? `Duplicate found: ${state.finalAnswer}`
+          {answer !== null
+            ? `Duplicate found: ${answer}`
             : 'No duplicate found in array'}
         </p>
       </div>
