@@ -5,7 +5,7 @@ import { TwoPointers } from './arrays/findTheDuplicate/TwoPointers';
 const App = () => {
   return (
     <main>
-      <TwoPointers array={[8, 4, 10, 2, 1, 7, 3, 5, 8]} />
+      <TwoPointers array={[4, 10, 2, 1, 3, 5, 8, 7]} />
     </main>
   );
 };
