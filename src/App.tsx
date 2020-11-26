@@ -59,7 +59,9 @@ const App = () => {
 
       <div className="four scene">
         <p>
-          Duplicate number: <b>{state.finalAnswer}</b>
+          {state.finalAnswer !== null
+            ? `Duplicate found: ${state.finalAnswer}`
+            : 'No duplicate found in array'}
         </p>
       </div>
     </main>
