@@ -1,7 +1,11 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
+import gsap from 'gsap';
 import App from './App';
 import reportWebVitals from './reportWebVitals';
+import { TextPlugin } from 'gsap/all';
+
+gsap.registerPlugin(TextPlugin);
 
 ReactDOM.render(
   <React.StrictMode>

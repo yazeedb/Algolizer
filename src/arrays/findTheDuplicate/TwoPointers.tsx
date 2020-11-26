@@ -1,9 +1,6 @@
 import React, { FC, useEffect } from 'react';
 import gsap from 'gsap';
 import './TwoPointers.scss';
-import { TextPlugin } from 'gsap/all';
-
-gsap.registerPlugin(TextPlugin);
 
 interface TwoPointersProps {
   array: number[];
@@ -15,7 +12,7 @@ export const TwoPointers: FC<TwoPointersProps> = ({ array }) => {
 
   useEffect(() => {
     getAnimation(result);
-  }, []);
+  }, [result]);
 
   return (
     <div>
@@ -65,6 +62,7 @@ const getAnimation = (result: Result) => {
   const arrayElements = Array.from(document.querySelectorAll('.element'));
 
   const baseAnimation = tl
+    .set('.pointer', { y: 0 })
     .from('.first', { xPercent: -100 })
     .from('.second', { xPercent: -100 }, '+=1')
     .from('.element-second', { opacity: 0, stagger: { amount: 1.5 } }, '+=1')
@@ -72,28 +70,24 @@ const getAnimation = (result: Result) => {
 
   if (result === null) {
     return baseAnimation
-      .to('.pointer', {
-        keyframes: marchPointers(arrayElements.slice(0, -2)),
-        onComplete: () => bouncePointers
-      })
+      .to('.pointer', { keyframes: marchPointers(arrayElements.slice(0, -2)) })
+      .to('.pointer.one, .pointer.two', { opacity: 0 }, '+=1')
       .from('.four', { xPercent: -100 })
       .to('.four p', { text: 'This array has no duplicates!' });
   }
 
   return baseAnimation
     .to('.pointer', {
-      keyframes: marchPointers(arrayElements.slice(0, result.index)),
-      onComplete: () => bouncePointers
+      keyframes: marchPointers(arrayElements.slice(0, result.index))
     })
+    .fromTo(
+      '.pointer.one, .pointer.two',
+      { y: (i) => (i % 2 ? '+=10' : '-=10') },
+      { y: (i) => (i % 2 ? '-=20' : '+=20'), repeat: -1, yoyo: true }
+    )
     .from('.four', { xPercent: -100 })
-    .to('.four p', { text: `Answer: ${result.answer}` });
+    .to('.four p', { text: `The duplicate number is ${result.answer}` });
 };
-
-const bouncePointers = gsap.fromTo(
-  '.pointer.one, .pointer.two',
-  { y: (i) => (i % 2 ? '+=10' : '-=10') },
-  { y: (i) => (i % 2 ? '-=20' : '+=20'), repeat: -1, yoyo: true }
-);
 
 const marchPointers = (arrayElements: Element[]) =>
   arrayElements.map((e) => {
