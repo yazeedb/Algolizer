@@ -27,7 +27,7 @@ export const TwoPointers: FC<TwoPointersProps> = ({
 
     if (answerFound) {
       tl.fromTo('.pointer.one', { y: '+=10' }, { y: '-=20' });
-      tl.fromTo('.pointer.two', { y: '-=10' }, { y: '+=20' }, 0);
+      tl.fromTo('.pointer.two', { y: '-=10' }, { y: '+=20' }, '<');
 
       onComplete(sortedArray[p1].toString());
 

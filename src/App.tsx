@@ -4,7 +4,7 @@ import './App.css';
 import { TwoPointers } from './arrays/findTheDuplicate/TwoPointers';
 import { reducer, initialState, input, sorted } from './state';
 
-const tl = gsap.timeline({ delay: 0.5 });
+const tl = gsap.timeline();
 
 const App = () => {
   const [state, dispatch] = useReducer(reducer, initialState);
@@ -12,17 +12,15 @@ const App = () => {
   useEffect(() => {
     tl.from('.first', { xPercent: -100 })
       .from('.second', { xPercent: -100 }, '+=1')
-      .from('.element', { opacity: 0 }, '+=1')
-      .from(
-        '.third',
-        {
-          xPercent: -100,
-          onStart: () => dispatch({ type: 'PLAY_TWO_POINTERS' })
-        },
-        '+=1'
-      )
+      .from('.element', { opacity: 0, stagger: { amount: 3 } })
+      // .addLabel('test')
+      .from('.third', {
+        xPercent: -100,
+        onStart: () => dispatch({ type: 'PLAY_TWO_POINTERS' })
+      })
       .addPause()
-      .from('.four', { xPercent: -100 }, '+=1');
+      .from('.four', { xPercent: -100 });
+    // .play('test');
   }, []);
 
   useEffect(() => {
@@ -35,21 +33,21 @@ const App = () => {
 
   return (
     <main>
-      <div className="first">
+      <div className="first scene">
         <h4>Receive input</h4>[{input.join(', ')}]
       </div>
 
-      <div className="second">
+      <div className="second scene">
         <h4>Sort the array</h4>[
         {sorted.map((v, index) => (
-          <span className="element">
+          <span className="element" key={index}>
             {v} {index !== sorted.length - 1 && ', '}
           </span>
         ))}
         ]
       </div>
 
-      <div className="third">
+      <div className="third scene">
         <TwoPointers
           sortedArray={sorted}
           start={state.scene === 'third'}
@@ -59,8 +57,10 @@ const App = () => {
         />
       </div>
 
-      <div className="four">
-        <h4>The duplicate number is {state.finalAnswer}</h4>
+      <div className="four scene">
+        <p>
+          Duplicate number: <b>{state.finalAnswer}</b>
+        </p>
       </div>
     </main>
   );
