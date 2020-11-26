@@ -13,14 +13,12 @@ const App = () => {
     tl.from('.first', { xPercent: -100 })
       .from('.second', { xPercent: -100 }, '+=1')
       .from('.element', { opacity: 0, stagger: { amount: 3 } })
-      // .addLabel('test')
       .from('.third', {
         xPercent: -100,
         onStart: () => dispatch({ type: 'PLAY_TWO_POINTERS' })
       })
       .addPause()
       .from('.four', { xPercent: -100 });
-    // .play('test');
   }, []);
 
   useEffect(() => {
