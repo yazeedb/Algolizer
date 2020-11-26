@@ -4,21 +4,21 @@ import './App.css';
 import { TwoPointers } from './arrays/findTheDuplicate/TwoPointers';
 import { reducer, initialState, input, sorted } from './state';
 
-const tl = gsap.timeline();
+const tl = gsap.timeline({ defaults: { xPercent: -100 } });
 
 const App = () => {
   const [state, dispatch] = useReducer(reducer, initialState);
 
   useEffect(() => {
-    tl.from('.first', { xPercent: -100 })
-      .from('.second', { xPercent: -100 }, '+=1')
-      .from('.element', { opacity: 0, stagger: { amount: 3 } })
+    tl.from('.first', {})
+      .from('.second', {}, '+=1')
+      .from('.element', { opacity: 0, stagger: { amount: 3 } }, '+=1')
       .from('.third', {
         xPercent: -100,
         onStart: () => dispatch({ type: 'PLAY_TWO_POINTERS' })
       })
       .addPause()
-      .from('.four', { xPercent: -100 });
+      .from('.four', {});
   }, []);
 
   useEffect(() => {
@@ -32,7 +32,8 @@ const App = () => {
   return (
     <main>
       <div className="first scene">
-        <h4>Receive input</h4>[{input.join(', ')}]
+        <h4>Receive input</h4>
+        <span>[{input.join(', ')}]</span>
       </div>
 
       <div className="second scene">
