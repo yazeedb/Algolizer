@@ -21,7 +21,7 @@ export const TwoPointers: FC<TwoPointersProps> = ({
   const answerFound = sortedArray[p1] === sortedArray[p2];
 
   useEffect(() => {
-    if (!start || sequenceDone) {
+    if (!start) {
       return;
     }
 
@@ -31,6 +31,11 @@ export const TwoPointers: FC<TwoPointersProps> = ({
 
       onComplete(sortedArray[p1].toString());
 
+      return;
+    }
+
+    if (sequenceDone) {
+      onComplete(null)
       return;
     }
 
