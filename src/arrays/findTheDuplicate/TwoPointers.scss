@@ -1,16 +1,11 @@
-$top: -25px;
-
 .two-pointers {
-  .pointers {
-    height: 0;
-  }
-
   .pointer {
     width: 0;
     height: 0;
     border-left: 20px solid transparent;
     border-right: 20px solid transparent;
     border-top: 20px solid;
+    display: inline-block;
 
     &.one {
       border-top-color: #f00;
