@@ -1,4 +1,4 @@
-export const input = [3, 7, 5, 1, 10, 9, 6, 2, 4, 8];
+export const input = [4, 2, 1, 3, 5, 1];
 export const sorted = [...input].sort((a, z) => a - z);
 
 export type FinalAnswer = string | null;

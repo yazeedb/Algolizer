@@ -12,7 +12,7 @@ const App = () => {
   useEffect(() => {
     tl.from('.first', {})
       .from('.second', {}, '+=1')
-      .from('.element', { opacity: 0, stagger: { amount: 3 } }, '+=1')
+      .from('.element-second', { opacity: 0, stagger: { amount: 3 } }, '+=1')
       .from('.third', {
         xPercent: -100,
         onStart: () => dispatch({ type: 'PLAY_TWO_POINTERS' })
@@ -39,7 +39,7 @@ const App = () => {
       <div className="second scene">
         <h4>Sort the array</h4>[
         {sorted.map((v, index) => (
-          <span className="element" key={index}>
+          <span className="element-second" key={index}>
             {v} {index !== sorted.length - 1 && ', '}
           </span>
         ))}
