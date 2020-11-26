@@ -77,7 +77,7 @@ const getAnimation = (result: Result) => {
         onComplete: () => bouncePointers
       })
       .from('.four', { xPercent: -100 })
-      .to('.four p', { text: 'No duplicate found!' });
+      .to('.four p', { text: 'This array has no duplicates!' });
   }
 
   return baseAnimation
